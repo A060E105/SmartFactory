@@ -2,6 +2,7 @@ import wave
 from pyaudio import PyAudio, paInt16
 import tqdm
 
+source_path = './source/'
 
 # recording
 def record():
@@ -30,7 +31,7 @@ def getDevice():
 
 # save data to wav file
 def save_wav(filename, data):
-	wf = wave.open(f"{filename}.wav", "wb")
+	wf = wave.open(f"{source_path}{filename}.wav", "wb")
 	wf.setnchannels(1)
 	wf.setsampwidth(2)
 	wf.setframerate(48000)
