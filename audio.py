@@ -36,6 +36,5 @@ def save_wav(filename, data):
 	wf.setnchannels(1)
 	wf.setsampwidth(2)
 	wf.setframerate(48000)
-	# wf.writeframes(b"".join(data))
 	wf.writeframes(data)
 	wf.close()
