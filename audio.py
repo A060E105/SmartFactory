@@ -1,6 +1,7 @@
 import wave
 from pyaudio import PyAudio, paInt16
 import tqdm
+import numpy as np
 
 source_path = './source/'
 
@@ -17,7 +18,7 @@ def record():
 		string_audio_data = stream.read(2048)
 		my_buf.append(string_audio_data)
 	stream.close()
-	return my_buf
+	return np.array(my_buf).tobytes()
 
 # show all input device
 def getDevice():
@@ -35,5 +36,6 @@ def save_wav(filename, data):
 	wf.setnchannels(1)
 	wf.setsampwidth(2)
 	wf.setframerate(48000)
-	wf.writeframes(b"".join(data))
+	# wf.writeframes(b"".join(data))
+	wf.writeframes(data)
 	wf.close()
