@@ -14,7 +14,7 @@ def record():
 	 input=True, 
 	 frames_per_buffer=2048)
 	my_buf = []
-	for _ in tqdm.trange(50):	# record  time
+	for _ in tqdm.trange(int(48000/ 2048 * 5)):	# record  time
 		string_audio_data = stream.read(2048)
 		my_buf.append(string_audio_data)
 	stream.close()
