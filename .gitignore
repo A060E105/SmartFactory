@@ -1,4 +1,6 @@
 .ipynb_checkpoints/
 *.ipynb
 source/
+audio/
+spec/
 __pycache__/
