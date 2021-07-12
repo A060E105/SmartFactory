@@ -2,11 +2,23 @@ import wave
 from pyaudio import PyAudio, paInt16
 import tqdm
 import numpy as np
+import os
 
 source_path = './source/'
 
+def my_mkdir( path ):
+    now_path = ''
+    for i in path.split('\\'):
+        now_path = os.path.join( now_path , i )
+        try:
+            os.mkdir(now_path)
+        except:
+            pass
+
+
 # recording
 def record():
+	my_mkdir(source_path)
 	pa = PyAudio()
 	stream = pa.open(format=paInt16,
 	 channels=1, 

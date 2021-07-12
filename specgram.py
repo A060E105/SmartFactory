@@ -9,7 +9,7 @@ from tqdm import tqdm
 from numpy.lib import stride_tricks
 from matplotlib import pyplot as plt
 
-picture_width , picture_height = 100 , 50 #圖片長寬比
+picture_width , picture_height = 200 , 100 #圖片長寬比
 # with_cut    = True
 CutTimeDef  = 2 #以1s截斷檔案
 SpaceNumDef = 1 #每次取時間間隔
@@ -103,7 +103,7 @@ def plotstft( freq_split_list , im_width , im_height ,samplerate, samples , bins
         #print("timebins: ", timebins)
         #print("freqbins: ", freqbins)
         # plt.imshow(np.transpose(ims), origin="None", aspect="auto", cmap="jet", extent = None, interpolation='None', vmin= -160, vmax= 0)
-        plt.imshow(np.transpose(ims), aspect="auto", cmap="jet", extent = None, interpolation='None', vmin= -160, vmax= 0)
+        plt.imshow(np.transpose(ims), origin="lower", aspect="auto", cmap="jet", extent = None, interpolation='None', vmin= -160, vmax= 0)
         plt.axis('off') 
         fig = plt.gcf()
         fig.set_size_inches(  im_width , im_height  ) #dpi = 300, output = 700*700 pixels
@@ -173,6 +173,8 @@ def CutFile( file_path , with_cut_file = True ):
 
 
 def convert_to_specgram(filename, with_cut=True, save_split_audio_file=False):
+    my_mkdir(audio_out_path)
+    my_mkdir(spec_path)
     audio_path = f'{source_path}{filename}.wav'
     audio_name = filename.split('.')[0]
     print (audio_name)
