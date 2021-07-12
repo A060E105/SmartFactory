@@ -1,4 +1,9 @@
 import socket
+import audio
+import pickle
+from A_weighting import A_weighting
+from specgram import convert_to_specgram
+from AI_analysis import AI_analysis
 
 
 HOST = ''
@@ -20,11 +25,18 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
             with client:
                 while True:
                     try:
-                        data = client.recv(1024)
-                        print (f'client data: {data}')
-                        if not data:
+                        filename = client.recv(1024)
+                        filename = filename.decode()
+                        print (f'client data: {filename}')
+                        if not filename:
                             break
-                        client.sendall(data)
+                        audio_temp = audio.record()
+                        AW_temp = A_weighting(48000, audio_temp)
+                        audio.save_wav(filename, AW_temp)
+                        convert_to_specgram(filename)
+                        result_list = AI_analysis(filename)
+                        result = pickle.dumps(result_list)
+                        client.sendall(result)
                     except:
                         pass
         except:
