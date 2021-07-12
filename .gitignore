@@ -3,4 +3,8 @@
 source/
 audio/
 spec/
+build/
+dist/
+*.spec
+*.rar
 __pycache__/
