@@ -173,7 +173,7 @@ def CutFile( file_path , with_cut_file = True ):
 
 
 def convert_to_specgram(filename, with_cut=True, save_split_audio_file=False):
-    audio_path = f'{source_path}{filename}'
+    audio_path = f'{source_path}{filename}.wav'
     audio_name = filename.split('.')[0]
     print (audio_name)
     index = 0
@@ -198,7 +198,7 @@ def convert_to_specgram(filename, with_cut=True, save_split_audio_file=False):
         for freq_info,image in zip(freq_split_list , image_list):
             img_bin = Image.fromarray( image.astype( np.uint8 )  , 'RGB')
             freq_str = '{}~{}'.format( freq_info[0] , freq_info[1] )
-            image_dir = os.path.join( spec_path , freq_str , audio_name )
+            image_dir = os.path.join( spec_path , freq_str , audio_name, 'OK' )
             file_name = '{}_{}.png'.format( audio_name.split('.')[0] , index )
             my_mkdir(image_dir)
             image_path = os.path.join( image_dir , file_name)  #設定圖片儲存路徑
