@@ -8,3 +8,4 @@ dist/
 *.spec
 *.rar
 __pycache__/
+*.h5
