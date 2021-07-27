@@ -10,3 +10,4 @@ dist/
 __pycache__/
 *.h5
 new_version_ted_test/
+.vscode/
