@@ -77,7 +77,7 @@ class Audio:
                 channels=self.channels,
                 rate=self.framerate,
                 input=True,
-                input_device_index=self.__getDevice(),
+                input_device_index=self.__getDevice(self.device),
                 frames_per_buffer=self.samples)
             my_buf = []
             for _ in tqdm.trange(int(self.framerate / self.samples * 6), desc=f"record {self.filename}.wav"):
@@ -128,21 +128,25 @@ class Audio:
 
         return device_name_list
 
-    def __getDevice(self) -> "int | None":
+    def __getDevice(self, device_name) -> "int | None":
         p = PyAudio()
         info = p.get_host_api_info_by_index(0)
         numdevices = info.get('deviceCount')
         for i in range(0, numdevices):
             if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
-                if ((re.search(self.device, p.get_device_info_by_host_api_device_index(0, i).get('name'))) is not None):
+                if ((re.search(device_name, p.get_device_info_by_host_api_device_index(0, i).get('name'))) is not None):
                     return i
 
     def hasDevice(self) -> bool:
-        if self.__getDevice() is None:
+        # develop test
+        if self.device == 'test':
+            return True
+
+        if self.__getDevice(self.device) is None:
             # return False
             # develop test
             print ("has not device")
-            return True
+            return False
         else:
             print ("has device")
             return True
@@ -155,7 +159,7 @@ class Specgram():
     picture_width , picture_height = 200 , 100 #圖片長寬比
     CutTimeDef  = 2 #以1s截斷檔案
     SpaceNumDef = 1 #每次取時間間隔
-    freq_split_list = [ [0,6000] ]
+    freq_split_list = [ [0,10000] ]
 
     def __init__(self, filename: str, cut=True, save_audio=False) -> None:
         self.filename = filename
@@ -337,7 +341,7 @@ class AI_analysis():
         self.analysis = []
 
     def getResult(self) -> list:
-        test_dir = os.path.join( 'spec' , '0~6000', self.filename )
+        test_dir = os.path.join('spec', '0~10000', self.filename)
         test_datagen = ImageDataGenerator(rescale=1./255)
         test_generator = test_datagen.flow_from_directory(
                                     test_dir, # 目標目錄
@@ -382,13 +386,17 @@ class SmartFactoryService():
     def run(self) -> None:
         au = Audio(self.filename, device=self.device)
         # print(au.getDeviceName())
-        au.record()
-        au.A_weighting()
-        au.save_wav()
-        Specgram(self.filename).toSpecgram()
-        self.result = AI_analysis(self.filename, self.model).getResult()
-        self.queue.put(self.result)
-        print(self.result)
+        if au.hasDevice():
+            au.record()
+            au.A_weighting()
+            au.save_wav()
+            Specgram(self.filename).toSpecgram()
+            self.result = AI_analysis(self.filename, self.model).getResult()
+            self.queue.put(self.result)
+            print(self.result)
+        else:
+            result = ["has not found device", "please check your device"]
+            self.queue.put(result)
 
 
 # if __name__ == '__main__':

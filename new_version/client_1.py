@@ -23,7 +23,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
 
             while not device:
                 device = input('please input device (1 or 2): ')
-                if not device in ['1', '2']:
+                if not device in ['1', '2', 'test']:
                     device = ''
             print(f'send: {outdata}, device: {device}')
 
