@@ -56,7 +56,7 @@ def my_mkdir(path: str) -> None:
 #   Audio class
 # =============================================================================
 class Audio:
-    DEVICE_1 = r'Cotron EZM-001\)$'
+    DEVICE_1 = r'Cotron EZM-001-1\)$'
     DEVICE_2 = r'Cotron EZM-001-2\)$'
 
     framerate = 48000
@@ -155,7 +155,7 @@ class Specgram():
     picture_width , picture_height = 200 , 100 #圖片長寬比
     CutTimeDef  = 2 #以1s截斷檔案
     SpaceNumDef = 1 #每次取時間間隔
-    freq_split_list = [ [0,6000] ]
+    freq_split_list = [ [0,10000] ]
 
     def __init__(self, filename: str, cut=True, save_audio=False) -> None:
         self.filename = filename
