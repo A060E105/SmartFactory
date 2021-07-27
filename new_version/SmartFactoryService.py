@@ -56,7 +56,7 @@ def my_mkdir(path: str) -> None:
 #   Audio class
 # =============================================================================
 class Audio:
-    DEVICE_1 = r'Cotron EZM-001\)$'
+    DEVICE_1 = r'Cotron EZM-001-1\)$'
     DEVICE_2 = r'Cotron EZM-001-2\)$'
 
     framerate = 48000
