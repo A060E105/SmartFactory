@@ -9,7 +9,7 @@ HOST = ''
 PORT_1 = 7000
 PORT_2 = 7001
 
-devices = {'1': Audio.DEVICE_1, '2': Audio.DEVICE_2}
+devices = {'1': Audio.DEVICE_1, '2': Audio.DEVICE_2, 'test': 'test'}
 
 class Service(Process):
     def __init__(self, config: tuple) -> None:
